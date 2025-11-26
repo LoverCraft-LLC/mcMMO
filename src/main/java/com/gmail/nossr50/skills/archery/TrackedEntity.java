@@ -1,12 +1,11 @@
 package com.gmail.nossr50.skills.archery;
 
 import com.gmail.nossr50.mcMMO;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.scheduler.BukkitRunnable;
-
+import com.gmail.nossr50.util.CancellableRunnable;
 import java.util.UUID;
+import org.bukkit.entity.LivingEntity;
 
-public class TrackedEntity extends BukkitRunnable {
+public class TrackedEntity extends CancellableRunnable {
     private final LivingEntity livingEntity;
     private final UUID id;
     private int arrowCount;
@@ -15,7 +14,7 @@ public class TrackedEntity extends BukkitRunnable {
         this.livingEntity = livingEntity;
         this.id = livingEntity.getUniqueId();
 
-        this.runTaskTimer(mcMMO.p, 12000, 12000);
+        mcMMO.p.getFoliaLib().getScheduler().runAtEntityTimer(livingEntity, this, 12000, 12000);
     }
 
     @Override

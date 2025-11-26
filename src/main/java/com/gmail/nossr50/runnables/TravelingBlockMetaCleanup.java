@@ -1,12 +1,12 @@
 package com.gmail.nossr50.runnables;
 
 import com.gmail.nossr50.mcMMO;
+import com.gmail.nossr50.util.CancellableRunnable;
 import com.gmail.nossr50.util.MetadataConstants;
 import org.bukkit.entity.Entity;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
-public class TravelingBlockMetaCleanup extends BukkitRunnable {
+public class TravelingBlockMetaCleanup extends CancellableRunnable {
     private final @NotNull Entity entity;
     private final @NotNull mcMMO pluginRef;
 
@@ -17,7 +17,7 @@ public class TravelingBlockMetaCleanup extends BukkitRunnable {
 
     @Override
     public void run() {
-        if(!entity.isValid()) {
+        if (!entity.isValid()) {
             entity.removeMetadata(MetadataConstants.METADATA_KEY_TRAVELING_BLOCK, pluginRef);
             this.cancel();
         } else if (!entity.hasMetadata(MetadataConstants.METADATA_KEY_TRAVELING_BLOCK)) {

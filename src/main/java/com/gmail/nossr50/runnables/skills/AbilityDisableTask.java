@@ -4,6 +4,7 @@ import com.gmail.nossr50.datatypes.interactions.NotificationType;
 import com.gmail.nossr50.datatypes.player.McMMOPlayer;
 import com.gmail.nossr50.datatypes.skills.SuperAbilityType;
 import com.gmail.nossr50.mcMMO;
+import com.gmail.nossr50.util.CancellableRunnable;
 import com.gmail.nossr50.util.EventUtils;
 import com.gmail.nossr50.util.Misc;
 import com.gmail.nossr50.util.player.NotificationManager;
@@ -12,24 +13,23 @@ import com.gmail.nossr50.util.skills.SkillUtils;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
-public class AbilityDisableTask extends BukkitRunnable {
-    private final McMMOPlayer mcMMOPlayer;
+public class AbilityDisableTask extends CancellableRunnable {
+    private final McMMOPlayer mmoPlayer;
     private final SuperAbilityType ability;
 
-    public AbilityDisableTask(McMMOPlayer mcMMOPlayer, SuperAbilityType ability) {
-        this.mcMMOPlayer = mcMMOPlayer;
+    public AbilityDisableTask(McMMOPlayer mmoPlayer, SuperAbilityType ability) {
+        this.mmoPlayer = mmoPlayer;
         this.ability = ability;
     }
 
     @Override
     public void run() {
-        if (!mcMMOPlayer.getAbilityMode(ability)) {
+        if (!mmoPlayer.getAbilityMode(ability)) {
             return;
         }
 
-        Player player = mcMMOPlayer.getPlayer();
+        Player player = mmoPlayer.getPlayer();
 
         switch (ability) {
             case SUPER_BREAKER:
@@ -49,21 +49,26 @@ public class AbilityDisableTask extends BukkitRunnable {
 
         EventUtils.callAbilityDeactivateEvent(player, ability);
 
-        mcMMOPlayer.setAbilityMode(ability, false);
-        mcMMOPlayer.setAbilityInformed(ability, false);
+        mmoPlayer.setAbilityMode(ability, false);
+        mmoPlayer.setAbilityInformed(ability, false);
 
 //        ParticleEffectUtils.playAbilityDisabledEffect(player);
 
-        if (mcMMOPlayer.useChatNotifications()) {
+        if (mmoPlayer.useChatNotifications()) {
             //player.sendMessage(ability.getAbilityOff());
-            NotificationManager.sendPlayerInformation(player, NotificationType.ABILITY_OFF, ability.getAbilityOff());
+            NotificationManager.sendPlayerInformation(player, NotificationType.ABILITY_OFF,
+                    ability.getAbilityOff());
         }
 
         if (mcMMO.p.getAdvancedConfig().sendAbilityNotificationToOtherPlayers()) {
-            SkillUtils.sendSkillMessage(player, NotificationType.SUPER_ABILITY_ALERT_OTHERS, ability.getAbilityPlayerOff());
+            SkillUtils.sendSkillMessage(player, NotificationType.SUPER_ABILITY_ALERT_OTHERS,
+                    ability.getAbilityPlayerOff());
         }
-        if(!mcMMO.isServerShutdownExecuted()) {
-            new AbilityCooldownTask(mcMMOPlayer, ability).runTaskLater(mcMMO.p, (long) PerksUtils.handleCooldownPerks(player, ability.getCooldown()) * Misc.TICK_CONVERSION_FACTOR);
+        if (!mcMMO.isServerShutdownExecuted()) {
+            mcMMO.p.getFoliaLib().getScheduler()
+                    .runAtEntityLater(player, new AbilityCooldownTask(mmoPlayer, ability),
+                            (long) PerksUtils.handleCooldownPerks(player, ability.getCooldown())
+                                    * Misc.TICK_CONVERSION_FACTOR);
         }
     }
 

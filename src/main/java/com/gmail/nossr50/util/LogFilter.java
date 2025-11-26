@@ -1,7 +1,8 @@
 package com.gmail.nossr50.util;
 
-import com.gmail.nossr50.mcMMO;
+import static com.gmail.nossr50.util.LogUtils.DEBUG_STR;
 
+import com.gmail.nossr50.mcMMO;
 import java.util.logging.Filter;
 import java.util.logging.LogRecord;
 
@@ -15,6 +16,6 @@ public class LogFilter implements Filter {
 
     @Override
     public boolean isLoggable(LogRecord record) {
-        return !(record.getMessage().contains("[Debug]") && !debug);
+        return !(record.getMessage().contains(DEBUG_STR) && !debug);
     }
 }

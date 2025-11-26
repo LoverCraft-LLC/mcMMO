@@ -10,9 +10,9 @@
 General:
     # When players reach certain level milestones messages will be broadcast
     Level_Up_Chat_Broadcasts:
-        # Whether or not level up broadcasts are enabled
+        # Whether level up broadcasts are enabled
         Enabled: true
-        # Whether or not you want power level milestones to be broadcast
+        # Whether you want power level milestones to be broadcast
         Broadcast_Powerlevels:
             Enabled: true
             # How often to broadcast, you can change this to 1 to always broadcast a level up event, a setting of 100 will limit it to every 100 levels (for example level 100, level 200, etc)
@@ -20,9 +20,9 @@ General:
             Broadcast_Targets:
                 # Send the message to the console as well
                 Send_To_Console: true
-                # Whether or not to only send chat messages to party members
+                # Whether to only send chat messages to party members
                 Only_Party_Members: false
-                # Whether or not players who recieve a level up broadcast have to be on the same world as the one who leveled up
+                # Whether players who receive a level up broadcast have to be on the same world as the one who leveled up
                 Only_Same_World: false
                 # Distance restrictions
                 Distance_Restrictions:
@@ -34,9 +34,9 @@ General:
         Broadcast_Targets:
             # Send the message to the console as well
             Send_To_Console: true
-            # Whether or not to only send chat messages to party members
+            # Whether to only send chat messages to party members
             Only_Party_Members: false
-            # Whether or not players who recieve a level up broadcast have to be on the same world as the one who leveled up
+            # Whether players who recieve a level up broadcast have to be on the same world as the one who leveled up
             Only_Same_World: false
             # Distance restrictions
             Distance_Restrictions:
@@ -44,11 +44,15 @@ General:
                 # When using Restrict_Distance the blow setting configures the range of the broadcast
                 Restricted_Radius: 100
         # Turning this on will scale mcMMO around 1-1000 with default scaling factor
-        # Everything in your config related to skill level requirements, skill level bonuses, etc will be multiplied by 10 when this mode is on
+        # Everything in your config related to skill level requirements, skill level bonuses, etc. will be multiplied by 10 when this mode is on
         # This change is purely cosmetic, it retains the old feel of mcMMO where you could level up thousands of times
     RetroMode:
         Enabled: true
     Locale: en_US
+    PowerLevel:
+        Skill_Mastery:
+            Enabled: true
+    AprilFoolsEvent: true
     MOTD_Enabled: true
     EventBroadcasts: true
     EventInfoOnPlayerJoin: true
@@ -59,9 +63,6 @@ General:
     Save_Interval: 10
     # Allow mcMMO to report on basic anonymous usage
     Stats_Tracking: true
-    # Allow mcMMO to check if a new version is available
-    Update_Check: true
-    Prefer_Beta: false
     Power_Level_Cap: 0
     # Should mcMMO truncate levels if you lower your max level cap for a skillname
     TruncateSkills: true
@@ -147,7 +148,7 @@ Scoreboard:
             LevelUp_Time: 5
 
 Mob_Healthbar:
-    # Enabled: Whether or not the feature is enabled at all
+    # Enabled: Whether the feature is enabled at all
     # Display_Type: Per player Default display for mob health bars - HEARTS, BAR, or DISABLED
     Enabled: true
     Display_Type: HEARTS
@@ -225,6 +226,9 @@ Hardcore:
             Taming: false
             Unarmed: false
             Woodcutting: false
+            Tridents: false
+            Crossbows: false
+            Maces: false
     Vampirism:
         Leech_Percentage: 5.0
         Level_Threshold: 0
@@ -242,6 +246,9 @@ Hardcore:
             Taming: false
             Unarmed: false
             Woodcutting: false
+            Tridents: false
+            Crossbows: false
+            Maces: false
 
 #
 #  Settings for SMP Mods
@@ -408,6 +415,18 @@ Skills:
         Enabled_For_PVP: true
         Enabled_For_PVE: true
         Level_Cap: 0
+    Tridents:
+        Enabled_For_PVP: true
+        Enabled_For_PVE: true
+        Level_Cap: 0
+    Crossbows:
+        Enabled_For_PVP: true
+        Enabled_For_PVE: true
+        Level_Cap: 0
+    Maces:
+        Enabled_For_PVP: true
+        Enabled_For_PVE: true
+        Level_Cap: 0
     Taming:
         Enabled_For_PVP: true
         Enabled_For_PVE: true
@@ -441,7 +460,7 @@ Skills:
         Enabled_For_PVE: true
         Level_Cap: 0
         Block_Cracker:
-            SmoothBrick_To_CrackedBrick: true
+            Allow_Block_Cracker: true
         # When using Unarmed, picked up items will automatically get moved to a free slot instead of going in the slot
         # of your hand. Should item pickup be disabled when your entire inventory - except for your hand - is full?
         Item_Pickup_Disabled_Full_Inventory: true
@@ -464,6 +483,19 @@ Green_Thumb_Replanting_Crops:
 ###
 Bonus_Drops:
     Herbalism:
+        Bush: true
+        Cactus_Flower: true
+        Firefly_Bush: true
+        Leaf_Litter: true
+        Short_Dry_Grass: true
+        Tall_Dry_Grass: true
+        Wildflowers: true
+        Eyeblossom: true
+        Open_Eyeblossom: true
+        Closed_Eyeblossom: true
+        Pitcher_Plant: true
+        Torchflower: true
+        Pink_Petals: true
         Glow_Berries: true
         Cave_Vines: true
         Cave_Vines_Plant: true
@@ -601,8 +633,12 @@ Bonus_Drops:
         Acacia_Log: true
         Birch_Wood: true
         Birch_Log: true
+        Cherry_Wood: true
+        Cherry_Log: true
         Dark_Oak_Wood: true
+        Pale_Oak_Wood: true
         Dark_Oak_Log: true
+        Pale_Oak_Log: true
         Oak_Wood: true
         Oak_Log: true
         Jungle_Wood: true
@@ -670,6 +706,7 @@ Particles:
     Flux: true
     Greater_Impact: true
     Call_of_the_Wild: true
+    Cripple: true
 
     # These settings determine if fireworks should get launched when a player levels-up,
     # this will happen by default for every 100 levels.

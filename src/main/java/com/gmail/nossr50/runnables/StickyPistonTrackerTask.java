@@ -2,11 +2,11 @@ package com.gmail.nossr50.runnables;
 
 import com.gmail.nossr50.mcMMO;
 import com.gmail.nossr50.util.BlockUtils;
+import com.gmail.nossr50.util.CancellableRunnable;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.scheduler.BukkitRunnable;
 
-public class StickyPistonTrackerTask extends BukkitRunnable {
+public class StickyPistonTrackerTask extends CancellableRunnable {
     private final BlockFace direction;
     private final Block block;
     private final Block movedBlock;
@@ -19,7 +19,7 @@ public class StickyPistonTrackerTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        if (!mcMMO.getPlaceStore().isTrue(movedBlock.getRelative(direction))) {
+        if (!mcMMO.getUserBlockTracker().isIneligible(movedBlock.getRelative(direction))) {
             return;
         }
 
@@ -29,7 +29,7 @@ public class StickyPistonTrackerTask extends BukkitRunnable {
         }
 
         // The sticky piston actually pulled the block so move the PlaceStore data
-        mcMMO.getPlaceStore().setFalse(movedBlock.getRelative(direction));
-        mcMMO.getPlaceStore().setTrue(movedBlock);
+        mcMMO.getUserBlockTracker().setEligible(movedBlock.getRelative(direction));
+        BlockUtils.setUnnaturalBlock(movedBlock);
     }
 }
