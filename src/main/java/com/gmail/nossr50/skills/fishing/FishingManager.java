@@ -172,10 +172,17 @@ public class FishingManager extends SkillManager {
             lastFishingBoundingBox = newCastBoundingBox;
         }
 
+        var player = getPlayer();
+
         if (fishCaughtCounter + 1 == ExperienceConfig.getInstance()
                 .getFishingExploitingOptionOverFishLimit()) {
-            getPlayer().sendMessage(LocaleLoader.getString("Fishing.LowResourcesTip",
-                    ExperienceConfig.getInstance().getFishingExploitingOptionMoveRange()));
+
+            player.sendMessage("&f");
+            player.sendMessage(" &fYou sense this area is running out of fish...");
+            player.sendMessage(String.format(" &fTry fishing &e%s &fblocks farther.", ExperienceConfig.getInstance().getFishingExploitingOptionMoveRange()));
+            player.sendMessage("&f");
+
+            player.sendTitle("&a", String.format("&fFew fish here. Try &e%s &fblocks farther.", ExperienceConfig.getInstance().getFishingExploitingOptionMoveRange()));
         }
     }
 
